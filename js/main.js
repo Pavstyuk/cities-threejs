@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import {
     OrbitControls
 } from 'three/addons/controls/OrbitControls.js';
+
 import {
     GLTFLoader
 } from 'three/addons/loaders/GLTFLoader.js';
@@ -50,7 +51,7 @@ for (let x = -3; x <= 3; x += 3) {
     for (let y = -3; y <= 3; y += 3) {
 
         const loader = new THREE.TextureLoader();
-        const texture = loader.load(`images/photo-${i+1}.webp`);
+        const texture = loader.load(`images/photo-${i + 1}.webp`);
         texture.colorSpace = THREE.SRGBColorSpace;
 
         const material = new THREE.MeshBasicMaterial({
@@ -86,9 +87,9 @@ controls.listenToKeyEvents(window); // optional
 controls.keyPanSpeed = 30;
 controls.enableZoom = false;
 
-const stats = new Stats();
-stats.showPanel(0);
-document.body.appendChild(stats.dom);
+// const stats = new Stats();
+// stats.showPanel(0);
+// document.body.appendChild(stats.dom);
 
 const loader = new GLTFLoader();
 
@@ -100,7 +101,7 @@ const clock = new THREE.Clock();
 
 const animation = () => {
 
-    stats.begin();
+    // stats.begin();
 
     let delta = clock.getDelta();
 
@@ -110,13 +111,9 @@ const animation = () => {
     // group.rotation.z += 0.01;
     group.children.forEach((n, i) => {
 
-        // let j = i % 2 === 0 ? -1 : 1;
-        // n.rotation.z += 0.1 * delta * j;
         if (n.index !== activeIndex) {
             let j = i % 2 === 0 ? -1 : 1;
             n.rotation.z += 0.1 * delta * j;
-        } else {
-            // n.rotation.z = 0;
         }
     })
 
@@ -125,7 +122,7 @@ const animation = () => {
     TWEEN.update();
     renderer.render(scene, camera);
 
-    stats.end();
+    // stats.end();
     renderer.setAnimationLoop(animation);
 
 }
@@ -156,24 +153,24 @@ const clicking = (e) => {
         activeIndex = object.index;
 
         new TWEEN.Tween(object.rotation).to({
-                z: 0,
-            }, 1000)
+            z: 0,
+        }, 1000)
             .easing(TWEEN.Easing.Exponential.InOut)
             .start();
 
         new TWEEN.Tween(object.position).to({
-                x: 0,
-                y: 0,
-                z: 4
-            }, 1000)
+            x: 0,
+            y: 0,
+            z: 4
+        }, 1000)
             .easing(TWEEN.Easing.Exponential.InOut)
             .start();
 
         new TWEEN.Tween(object.scale).to({
-                x: 3,
-                y: 3,
-                z: 3,
-            }, 1000)
+            x: 3,
+            y: 3,
+            z: 3,
+        }, 1000)
             .easing(TWEEN.Easing.Exponential.InOut)
             .start();
 
@@ -189,17 +186,17 @@ window.addEventListener('click', clicking);
 const resetActive = () => {
     if (activeIndex !== -1) {
         new TWEEN.Tween(group.children[activeIndex].position).to({
-                x: group.children[activeIndex].basePosition.x,
-                y: group.children[activeIndex].basePosition.y,
-                z: group.children[activeIndex].basePosition.z,
-            }, 1000)
+            x: group.children[activeIndex].basePosition.x,
+            y: group.children[activeIndex].basePosition.y,
+            z: group.children[activeIndex].basePosition.z,
+        }, 1000)
             .easing(TWEEN.Easing.Exponential.InOut)
             .start();
         new TWEEN.Tween(group.children[activeIndex].scale).to({
-                x: 1,
-                y: 1,
-                z: 1,
-            }, 1000)
+            x: 1,
+            y: 1,
+            z: 1,
+        }, 1000)
             .easing(TWEEN.Easing.Exponential.InOut)
             .start();
     }
